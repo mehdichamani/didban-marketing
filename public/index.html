@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikStatus | تکامل نظارت؛ کنترل یکپارچه کلان</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"
+        type="text/css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #0a0f1e;
+            color: #e2e8f0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(45, 212, 191, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(45, 212, 191, 0.2);
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(45, 212, 191, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45, 212, 191, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .glow-btn {
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(45, 212, 191, 0.6);
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <i class="fas fa-shield-halved text-2xl text-teal-400"></i>
+                <span class="text-xl font-bold">Hik<span class="text-teal-400">Status</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 space-x-reverse">
+                <a href="#problem" class="text-slate-300 hover:text-teal-400 transition">چالش‌ها</a>
+                <a href="#features" class="text-slate-300 hover:text-teal-400 transition">ویژگی‌ها</a>
+                <a href="#security" class="text-slate-300 hover:text-teal-400 transition">امنیت</a>
+                <a href="#license" class="text-slate-300 hover:text-teal-400 transition">لایسنس</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="admin.html" title="پنل مدیریت"
+                    class="text-slate-300 hover:text-teal-400 border border-slate-700/80 hover:border-teal-500/40 bg-slate-800/60 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1.5">
+                    <i class="fas fa-user-lock text-teal-400"></i>
+                    <span class="hidden sm:inline">مدیریت</span>
+                </a>
+                <button onclick="openModal()"
+                    class="bg-teal-500 text-slate-900 px-5 py-2 rounded-lg font-bold hover:bg-teal-400 transition glow-btn">
+                    درخواست دمو
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center justify-center relative grid-bg pt-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div
+                class="inline-block mb-4 px-4 py-1 bg-slate-800/50 border border-teal-500/30 rounded-full text-teal-400 text-sm">
+                <i class="fas fa-circle text-[8px] animate-pulse ml-2"></i> پلتفرم هوشمند مانیتورینگ زیرساخت نظارت
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                تکامل نظارت؛ <br> از چالش‌های میدانی تا <span class="gradient-text">کنترل یکپارچه کلان</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10">
+                وقتی تعداد دوربین‌ها از حد مشخصی عبور می‌کند، نظارت به بحران تبدیل می‌شود. HikStatus سامانه‌ای متمرکز
+                برای پایش ۲۴ ساعته هزاران دوربین و NVR با فیلترینگ هوشمند خطاها.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="openModal()"
+                    class="bg-teal-500 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-teal-400 transition glow-btn">
+                    <i class="fas fa-rocket ml-2"></i> درخواست دموی اختصاصی
+                </button>
+                <a href="#features"
+                    class="border border-slate-600 text-slate-200 px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-800 transition">
+                    بررسی ویژگی‌ها
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-4xl mx-auto">
+                <div>
+                    <h3 class="text-4xl font-bold text-teal-400">+۵۰۰</h3>
+                    <p class="text-slate-400 mt-2">دستگاه NVR همزمان</p>
+                </div>
+                <div>
+                    <h3 class="text-4xl font-bold text-teal-400">۲۴/۷</h3>
+                    <p class="text-slate-400 mt-2">پایش مداوم و بدون خستگی</p>
+                </div>
+                <div>
+                    <h3 class="text-4xl font-bold text-teal-400">۱۰۰٪</h3>
+                    <p class="text-slate-400 mt-2">کاهش هشدارهای بی‌جا و نویز</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem Section -->
+    <section id="problem" class="py-24 container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">وقتی چشم‌ها و تجهیزات کم می‌آورند</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">با عبور تعداد دوربین‌ها از مرز ۱۲۸ دستگاه، کامپیوترها و ناظرین
+                انسانی دیگر توان پردازش و تحلیل این حجم از داده را ندارند.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-2xl text-center">
+                <i class="fas fa-eye-slash text-4xl text-rose-400 mb-4"></i>
+                <h3 class="text-xl font-bold mb-3">خستگی چشم ناظرین</h3>
+                <p class="text-slate-400">بررسی مداوم قطعی‌ها در میان انبوه داده‌ها باعث افزایش خطای انسانی می‌شود.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl text-center">
+                <i class="fas fa-server text-4xl text-amber-400 mb-4"></i>
+                <h3 class="text-xl font-bold mb-3">محدودیت سخت‌افزاری</h3>
+                <p class="text-slate-400">تجهیزات سنتی توان تفکیک خطاهای بی‌اهمیت از مشکلات حیاتی را ندارند.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl text-center">
+                <i class="fas fa-bell text-4xl text-purple-400 mb-4"></i>
+                <h3 class="text-xl font-bold mb-3">طوفان هشدارها</h3>
+                <p class="text-slate-400">ترکیب قطعی‌های کوتاه با خرابی‌های طولانی، تیم فنی را دچار فرسایش می‌کند.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution & Features Section -->
+    <section id="features" class="py-24 bg-slate-900/50 grid-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-teal-400 font-bold">ارزش‌آفرینی HikStatus</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">حل مشکلات کلان سازمان‌ها</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">فراتر از یک مانیتورینگ ساده، مستقیماً روی حل دغدغه‌های اصلی
+                    تیم‌های IT تمرکز داریم.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
+                    <div class="bg-teal-500/10 p-4 rounded-xl">
+                        <i class="fas fa-filter text-3xl text-teal-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3">فیلترینگ هوشمند خطاها</h3>
+                        <p class="text-slate-400 leading-relaxed">جداسازی قطعی‌های گذرا (مثل نوسانات برق) از قطعی‌های
+                            حیاتی. سیستم به جای ارسال صدها پیام آزاردهنده، تنها هنگام بروز خرابی واقعی و طولانی‌مدت
+                            هشدار صادر می‌کند.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
+                    <div class="bg-teal-500/10 p-4 rounded-xl">
+                        <i class="fas fa-network-wired text-3xl text-teal-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3">نظارت بر زیرساخت‌های پراکنده</h3>
+                        <p class="text-slate-400 leading-relaxed">مدیریت کارخانه‌ها و شعب توزیع‌شده در استان‌ها از یک
+                            نقطه مرکزی با مصرف کاملاً بهینه پهنای باند. دیگر نیازی به تیم‌های انسانی محلی نیست.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
+                    <div class="bg-teal-500/10 p-4 rounded-xl">
+                        <i class="fas fa-chart-line text-3xl text-teal-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3">گزارش‌گیری تعاملی و مدیریت بحران</h3>
+                        <p class="text-slate-400 leading-relaxed">تولید گزارش‌های روزانه (مثلاً قطعی‌های بالای ۲ ساعت).
+                            پر کردن فرمت ساده دلایل قطعی توسط واحد IT شعبه و ارائه نمودارهای تحلیلی جامع به مدیران ارشد.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
+                    <div class="bg-teal-500/10 p-4 rounded-xl">
+                        <i class="fas fa-hard-drive text-3xl text-teal-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3">پایش سلامت ذخیره‌سازی</h3>
+                        <p class="text-slate-400 leading-relaxed">تشخیص لحظه‌ای عدم ضبط تصاویر و مشکلات هارد یا NVR.
+                            دیگر هرگز پیش از وقوع حادثه متوجه ضبط نشدن دوربین‌ها (مثل باسکول کارخانه) نخواهید شد.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section id="security" class="py-24 container mx-auto px-6">
+        <div class="glass-card p-10 md:p-16 rounded-3xl text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <i class="fas fa-lock text-5xl text-teal-400 mb-6"></i>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">امنیت سایبری: خط قرمز ما در زیرساخت‌های حیاتی</h2>
+                <p class="text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    با توجه به تهدیدات سایبری و نیاز به استقرار در سطح کلان، ساختارهای امنیتی HikStatus با بالاترین
+                    استانداردها توسعه یافته است. از پروتکل‌های پیچیده احراز هویت تا سیستم‌های رمزنگاری و جلوگیری از
+                    حملات.
+                </p>
+                <a href="security.html"
+                    class="inline-flex items-center border border-teal-400 text-teal-400 px-8 py-3 rounded-lg font-bold hover:bg-teal-400 hover:text-slate-900 transition">
+                    <i class="fas fa-file-shield ml-2"></i> دریافت کاتالوگ امنیتی HikStatus
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- License & Business Model Section -->
+    <section id="license" class="py-24 bg-slate-900/50">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="md:w-1/2">
+                <span class="text-teal-400 font-bold">مدل تجاری</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">استقرار سریع با مدل لایسنس‌محور</h2>
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    برنامه ما پس از انتشار فاز تجاری، به صورت بسته‌های لایسنس‌محور (License-Based) ارائه خواهد شد. این
+                    مدل به سازمان‌ها اجازه می‌دهد متناسب با مقیاس زیرساخت خود (تعداد NVR و دوربین‌ها)، لایسنس مناسب را
+                    تهیه کرده و سامانه را با بالاترین سطح امنیت در سرورهای محلی (On-Premise) یا کلود استقرار دهند.
+                </p>
+                <ul class="space-y-3 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-teal-400 ml-2"></i> مقیاس‌پذیری
+                        متناسب با نیاز سازمان</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-teal-400 ml-2"></i> پشتیبانی و
+                        آپدیت‌های مستمر</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-teal-400 ml-2"></i> استقرار روی
+                        زیرساخت اختصاصی سازمان</li>
+                </ul>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="glass-card p-10 rounded-3xl w-full max-w-md text-center">
+                    <i class="fas fa-key text-6xl text-teal-400 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-2">آماده ارتقای سیستم نظارت خود هستید؟</h3>
+                    <p class="text-slate-400 mb-8">همین الان درخواست دمو بدهید تا کارشناسان ما با شما تماس بگیرند.</p>
+                    <button onclick="openModal()"
+                        class="w-full bg-teal-500 text-slate-900 py-4 rounded-lg font-bold text-lg hover:bg-teal-400 transition glow-btn">
+                        ثبت درخواست دموی اختصاصی
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Placeholders -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 space-x-reverse mb-4">
+                        <i class="fas fa-shield-halved text-xl text-teal-400"></i>
+                        <span class="text-lg font-bold">Hik<span class="text-teal-400">Status</span></span>
+                    </div>
+                    <p class="text-slate-500 text-sm">تکامل نظارت، از چالش‌های میدانی تا کنترل یکپارچه کلان.</p>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2 space-x-reverse mb-4">
+                        <i class="fas fa-laptop-code text-teal-400 text-lg"></i>
+                        <h4 class="font-bold text-slate-200">تیم توسعه و زیرساخت</h4>
+                        <span class="text-[11px] bg-teal-500/10 text-teal-400 border border-teal-500/30 px-2 py-0.5 rounded-full font-semibold">UnrealTeam</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="glass-card p-3.5 rounded-xl border border-slate-800/90 hover:border-teal-500/40 transition">
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-teal-500/10 border border-teal-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fas fa-user-gear text-teal-400 text-sm"></i>
+                                </div>
+                                <div class="overflow-hidden w-full">
+                                    <h5 class="text-sm font-bold text-slate-100">افشین نجاری</h5>
+                                    <p class="text-[11px] text-teal-400 font-medium mt-0.5">مدیریت پروژه | زیرساخت | تضمین کیفیت</p>
+                                    <div class="flex flex-wrap gap-1 mt-2">
+                                        <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700/80 px-1.5 py-0.5 rounded font-mono">Project Mgmt</span>
+                                        <span class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-1.5 py-0.5 rounded font-mono">DevOps / SysAdmin</span>
+                                        <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 px-1.5 py-0.5 rounded font-mono">QA & Testing</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card p-3.5 rounded-xl border border-slate-800/90 hover:border-cyan-500/40 transition">
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fas fa-code text-cyan-400 text-sm"></i>
+                                </div>
+                                <div class="overflow-hidden w-full">
+                                    <h5 class="text-sm font-bold text-slate-100">مهدی چمنی</h5>
+                                    <p class="text-[11px] text-cyan-400 font-medium mt-0.5">توسعه نرم‌افزار | طراحی رابط و تجربه کاربری</p>
+                                    <div class="flex flex-wrap gap-1 mt-2">
+                                        <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700/80 px-1.5 py-0.5 rounded font-mono">Full-Stack Dev</span>
+                                        <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 px-1.5 py-0.5 rounded font-mono">UI / UX Design</span>
+                                        <span class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-1.5 py-0.5 rounded font-mono">Architecture</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-slate-300">تماس با ما</h4>
+                    <ul class="text-slate-500 text-sm space-y-2">
+                        <li><i class="fas fa-envelope ml-2"></i><a
+                                href="mailto:[unrealteam@atomicmail.io]">unrealteam@atomicmail.io</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-6 text-center text-slate-600 text-sm">
+                <p>© 2026 تمامی حقوق برای HikStatus محفوظ است. | Powered by UnrealTeam
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Request Modal -->
+    <div id="demoModal"
+        class="modal-overlay fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="modal-content glass-card w-full max-w-lg rounded-2xl p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white transition">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+
+            <!-- Form View -->
+            <div id="formView">
+                <div class="text-center mb-6">
+                    <i class="fas fa-rocket text-3xl text-teal-400 mb-3"></i>
+                    <h3 class="text-2xl font-bold">درخواست دموی اختصاصی</h3>
+                    <p class="text-slate-400 mt-2 text-sm">فرم را تکمیل کنید تا کارشناسان ما در اسرع وقت با شما تماس
+                        بگیرند.</p>
+                </div>
+
+                <form id="demoForm" class="space-y-4" onsubmit="submitDemo(event)">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-slate-300 mb-1">نام و نام خانوادگی *</label>
+                            <input type="text" id="demoName" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition"
+                                placeholder="مثال: علی رضایی">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-slate-300 mb-1">نام سازمان/شرکت *</label>
+                            <input type="text" id="demoCompany" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition"
+                                placeholder="مثال: هلدینگ صنعتی آرمان">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-slate-300 mb-1">شماره تماس مستقیم *</label>
+                            <input type="tel" id="demoPhone" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition"
+                                placeholder="09xxxxxxxxx">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-slate-300 mb-1">ایمیل سازمانی</label>
+                            <input type="email" id="demoEmail"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition"
+                                placeholder="email@company.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-300 mb-1">مقیاس زیرساخت فعلی *</label>
+                        <select id="demoScale" required
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition">
+                            <option value="" disabled selected>انتخاب کنید...</option>
+                            <option value="کمتر از ۱۰۰ دوربین">کمتر از ۱۰۰ دوربین</option>
+                            <option value="بین ۱۰۰ تا ۵۰۰ دوربین">بین ۱۰۰ تا ۵۰۰ دوربین</option>
+                            <option value="بین ۵۰۰ تا ۱۰۰۰ دوربین">بین ۵۰۰ تا ۱۰۰۰ دوربین</option>
+                            <option value="بیش از ۱۰۰۰ دوربین">بیش از ۱۰۰۰ دوربین</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-300 mb-1">توضیحات (اختیاری)</label>
+                        <textarea id="demoDescription"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-400 transition"
+                            rows="3" placeholder="در صورت نیاز چالش‌های فعلی خود را شرح دهید..."></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-teal-500 text-slate-900 py-4 rounded-lg font-bold text-lg hover:bg-teal-400 transition glow-btn">
+                        ثبت درخواست
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success View -->
+            <div id="successView" class="hidden text-center py-8">
+                <div class="w-20 h-20 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-check text-4xl text-teal-400"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">درخواست شما با موفقیت ثبت شد!</h3>
+                <p class="text-slate-400 mb-8">کارشناسان فروش HikStatus در اولین فرصت کاری برای هماهنگی دمو با شما تماس
+                    خواهند گرفت.</p>
+                <button onclick="closeModal()"
+                    class="bg-slate-800 text-slate-200 px-8 py-3 rounded-lg font-bold hover:bg-slate-700 transition">
+                    بستن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Logic
+        const modal = document.getElementById('demoModal');
+        const formView = document.getElementById('formView');
+        const successView = document.getElementById('successView');
+
+        function openModal() {
+            modal.classList.add('active');
+            formView.classList.remove('hidden');
+            successView.classList.add('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        async function submitDemo(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin ml-2"></i> در حال ارسال...';
+            
+            const formData = {
+                name: document.getElementById('demoName').value.trim(),
+                company: document.getElementById('demoCompany').value.trim(),
+                phone: document.getElementById('demoPhone').value.trim(),
+                email: document.getElementById('demoEmail').value.trim(),
+                scale: document.getElementById('demoScale').value,
+                description: document.getElementById('demoDescription').value.trim()
+            };
+
+            try {
+                const response = await fetch('/api/demo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    formView.classList.add('hidden');
+                    successView.classList.remove('hidden');
+                    e.target.reset();
+                } else {
+                    alert(result.error || 'خطا در ثبت درخواست. لطفاً مجدداً تلاش نمایید.');
+                }
+            } catch (err) {
+                console.error('Demo submit error:', err);
+                alert('خطا در برقراری ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        }
+
+        // Close modal on outside click
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

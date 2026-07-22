@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikStatus | کاتالوگ امنیتی و معماری محافظتی</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #050a14;
+            --card-bg: rgba(16, 33, 60, 0.6);
+            --accent-cyan: #00f2ff;
+            --accent-blue: #0077ff;
+            --accent-red: #ff3860;
+            --accent-green: #00ff9d;
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --border-color: rgba(0, 242, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background Canvas */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            padding: 120px 20px 60px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0) 0%, rgba(5, 10, 20, 1) 100%);
+        }
+
+        .logo-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            background: rgba(0, 242, 255, 0.05);
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to left, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .header-desc {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .executive-badge {
+            margin-top: 30px;
+            display: inline-block;
+            background: rgba(255, 56, 96, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Security Cards */
+        .security-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .security-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .security-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-left: 15px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4);
+        }
+
+        .card-title h2 {
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .card-title span {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-family: monospace;
+        }
+
+        .card-content {
+            padding-right: 10px;
+        }
+
+        .section-block {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-right: 2px solid var(--text-muted);
+        }
+
+        .section-block.business {
+            border-right-color: var(--accent-green);
+        }
+
+        .section-block.example {
+            border-right-color: var(--accent-blue);
+        }
+
+        .block-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .business .block-label {
+            color: var(--accent-green);
+        }
+
+        .example .block-label {
+            color: var(--accent-blue);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .card-icon {
+                margin: 0 0 10px 0;
+            }
+
+            .card-content {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo-badge"><i class="fas fa-shield-alt"></i> HikStatus Security</div>
+        <h1>کاتالوگ امنیتی و معماری محافظتی پلتفرم مانیتورینگ کلان</h1>
+        <p class="header-desc">
+            نمایانگر ساختار امنیتی چندلایه در سیستم مانیتورینگ یکپارچه تجهیزات نظارتی (NVRها و دوربین‌ها).
+            حفاظت از دارایی‌های فیزیکی سازمان، جلوگیری از نشت اطلاعات حساس و تضمین پایداری (Business Continuity) به
+            عنوان بالاترین اولویت در نظر گرفته شده است.
+        </p>
+        <div class="executive-badge"><i class="fas fa-user-tie"></i> گزارش اجرایی ویژه مدیریت ارشد، حراست کل و اعضای
+            هیئت‌مدیره</div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Feature 1 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-key"></i></div>
+                <div class="card-title">
+                    <h2>حفاظت پیشرفته از هویت و دسترسی کاربران</h2>
+                    <span>استاندارد PBKDF2-HMAC-SHA256</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>سیستم برای نگهداری اطلاعات ورود پرسنل، از قدرتمندترین استانداردهای رمزنگاری یک‌طرفه استفاده می‌کند.
+                    رمزها طی ۱۰۰,۰۰۰ دور عملیات ریاضی پیچیده به همراه سالت ۱۶ بایتی به شناسه غیرقابل نفوذ تبدیل می‌شوند.
+                </p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>در صورت وقوع بدترین سناریوها و دسترسی غیرمجاز هکرها به پایگاه داده مرکزی، آن‌ها صرفاً با
+                        رشته‌هایی کاملاً بی‌معنی روبرو می‌شوند.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>اگر قوی‌ترین ابرکامپیوترهای فعلی بخواهند رمز عبور یکی از مدیران را کشف کنند، به ده‌ها سال زمان
+                        نیاز خواهند داشت. این معماری تضمین می‌کند که لو رفتن دیتابیس، منجر به سقوط شبکه نظارتی کل کشور
+                        نمی‌شود.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-lock"></i></div>
+                <div class="card-title">
+                    <h2>گاوصندوق نظامی برای اطلاعات تجهیزات نظارتی پراکنده</h2>
+                    <span>رمزنگاری دوطرفه AES/Fernet</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>پایش متمرکز NVRهای کارخانه‌های زیرمجموعه، نیازمند نگهداری کلمات عبور آن‌ها است. پلتفرم این کلمات را
+                    در یک «گاوصندوق دیجیتال» با استاندارد نظامی AES قفل می‌کند. کلیدها در لایه‌ای کاملاً ایزوله نگهداری
+                    می‌شوند.</p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>این معماری تضمین می‌کند که حتی توسعه‌دهندگان سیستم نیز نمی‌توانند پسورد دوربین‌ها را مشاهده کنند.
+                        در داشبورد تعاملی، این فیلدها به طور کامل از خروجی سیستم سانسور و حذف می‌شوند.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>اگر یک مسئول مانیتورینگ در یک استان به پنل مدیریت لاگین کند، می‌تواند وضعیت دوربین‌ها را ببیند،
+                        اما به هیچ‌وجه نمی‌تواند پسورد اصلی دستگاه رکوردر را استخراج کرده و از آن برای نفوذ مستقیم به
+                        شبکه کارخانه سوءاستفاده کند.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="card-title">
+                    <h2>لایه دوم دفاعی: احراز هویت دو مرحله‌ای</h2>
+                    <span>2FA / TOTP</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>ورود به داشبورد مرکزی HikStatus مجهز به مکانیزم احراز هویت دو مرحله‌ای مبتنی بر زمان (TOTP) شده است
+                    تا از تبعات جبران‌ناپذیر سرقت رمز عبور جلوگیری شود.</p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>حتی در صورت افشای کامل نام کاربری و رمز عبور (فیشینگ یا کی‌لاگر)، هکرها بدون در اختیار داشتن
+                        دستگاه فیزیکی موبایلِ شخص مجاز، نمی‌توانند وارد سامانه نظارت کلان شوند.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>اگر کامپیوتر مدیر IT در یکی از سایت‌های صنعتی توسط بدافزاری آلوده شود، نفوذگران نمی‌توانند از راه
+                        دور هشدارهای قطعی NVRها را خاموش کنند؛ زیرا سیستم، کد یکبارمصرفی را طلب می‌کند که تنها روی گوشی
+                        موبایلِ سازمانیِ مدیر تولید می‌شود.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-shield-virus"></i></div>
+                <div class="card-title">
+                    <h2>سپر دفاعی هوشمند در برابر جعل درخواست</h2>
+                    <span>محافظت کامل CSRF</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>سیستم مجهز به مکانیزم اعتبارسنجی دقیق مبدأ درخواست‌ها (بررسی هدرهای Origin و Referer) است تا از فریب
+                    دادن مدیران برای کلیک روی لینک‌های مخرب جلوگیری کند.</p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>سیستم به صورت خودکار تشخیص می‌دهد که آیا دستورِ صادر شده دقیقاً از داخل پنل رسمی کارخانه ارسال
+                        شده است یا از یک تب مرورگر مخرب.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>اگر مدیر سیستم در رایانه خود وارد پنل شده باشد و همزمان ایمیلی آلوده را باز کند، هیچ کد مخربی
+                        نمی‌تواند برای خرابکاری در تنظیمات صدها NVR استفاده کند، زیرا سرور بلافاصله درخواست‌های خارجی را
+                        مسدود می‌کند.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-database"></i></div>
+                <div class="card-title">
+                    <h2>مدیریت بحران و تضمین پایش ۲۴ ساعته</h2>
+                    <span>بکاپ و بازیابی ضدخرابکاری</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>این پلتفرم فرآیند بازیابی اطلاعات را با الگوریتم «پردازش قطعه‌به‌قطعه» (Chunk-by-Chunk) و محدودیت
+                    حجمی ۵۰ مگابایت ایمن کرده است. سیستم سلامت فایل‌های SQLite را پیش از هر اقدامی بررسی می‌کند.</p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>سرور مرکزی در برابر حملات فلج‌کننده (مانند ارسال فایل‌های غول‌پیکر برای پر کردن رم سرور یا
+                        اصطلاحاً حملات OOM) کاملاً مقاوم است.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>اگر فردی قصد داشته باشد با آپلود یک فایل مخرب چند گیگابایتی سرور مانیتورینگ را از کار بیندازد تا
+                        سیستم نتواند گزارش قطعی‌ها را بدهد، سرور در همان ثانیه اول بدون مصرف منابع، عملیات را متوقف کرده
+                        و خطای امنیتی ثبت می‌کند.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="security-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-brain"></i></div>
+                <div class="card-title">
+                    <h2>هسته پیکربندی ایزوله و غیرقابل نفوذ</h2>
+                    <span>Environment Variables</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>در این سیستم، کلمات عبور مدیریت کلان (Super Admin) هرگز به صورت متن ساده در فایل‌های پیکربندی رها
+                    نمی‌شوند. اطلاعات حساس صرفاً از متغیرهای محیطی رمزنگاری‌شده دریافت می‌شوند.</p>
+
+                <div class="section-block business">
+                    <div class="block-label"><i class="fas fa-chart-line"></i> ارزش تجاری و امنیتی</div>
+                    <p>خطای انسانی (مثل جا ماندن پسورد در فایل‌های سیستم هنگام استقرار) به صفر می‌رسد و دسترسی فیزیکی به
+                        فایل‌های سرور لزوماً به معنای دسترسی به مدیریت کلان نرم‌افزار نخواهد بود.</p>
+                </div>
+
+                <div class="section-block example">
+                    <div class="block-label"><i class="fas fa-industry"></i> مثال ملموس در ابعاد کلان</div>
+                    <p>تنظیمات هسته برنامه به جای اینکه مانند یک یادداشت روی میز رها شوند، به صورت یک حافظه پنهان در ذهن
+                        سرور بارگذاری می‌شوند که پس از خاموش شدن سیستم، هیچ ردپایی از رمزهای عبور خام در حافظه دیسک باقی
+                        نمی‌ماند.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>HikStatus Platform</strong> | سپر دفاعی مستحکم در برابر تهدیدات سایبری داخلی و خارجی</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: #666;">© ۲۰۲۴ تمامی حقوق محفوظ است. طراحی شده برای مدیریت
+            ارشد و هیئت‌مدیره.</p>
+    </footer>
+
+    <script>
+        // Matrix Background Animation
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const characters = "01ا ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی";
+        const fontSize = 14;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 10, 20, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00f2ff';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        // Scroll Reveal Animation
+        const cards = document.querySelectorAll('.security-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100); // Stagger effect
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+
+</html>
