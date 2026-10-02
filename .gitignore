@@ -1,10 +1,5 @@
 node_modules/
 .wrangler/
-.git/
-package-lock.json
-package.json
-wrangler.json
-worker.js
 worker-configuration.d.ts
 marketing-old.html
 security-old.html
