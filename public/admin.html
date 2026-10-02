@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HikStatus | پنل مدیریت درخواست‌های دمو</title>
+    <title>دیدبان | پنل مدیریت درخواست‌های دمو</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -193,7 +193,7 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-        <p>© 2026 HikStatus Admin Panel | Powered by UnrealTeam</p>
+        <p>© 2026 دیدبان Admin Panel | Powered by UnrealTeam</p>
     </footer>
 
     <script>
@@ -405,7 +405,7 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.setAttribute("href", url);
-            link.setAttribute("download", `hikstatus_demo_requests_${Date.now()}.csv`);
+            link.setAttribute("download", `didban_demo_requests_${Date.now()}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
