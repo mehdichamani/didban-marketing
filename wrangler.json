@@ -1,27 +1,26 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "didban-cctv",
-  "main": "worker.js",
-  "compatibility_date": "2024-10-01",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
-  "rules": [
-    {
-      "type": "Text",
-      "globs": [
-        "**/*.html"
-      ],
-      "fallthrough": true
-    }
-  ],
-  "vars": {
-    "ADMIN_PASSWORD": "didban@admin123"
-  },
-  "kv_namespaces": [
-    {
-      "binding": "DEMO_KV",
-      "id": "7e2b1651a0a64a7e9323fe3b6ab62d2a"
-    }
-  ]
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "didban-cctv",
+	"main": "worker.js",
+	"compatibility_date": "2024-10-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"rules": [
+		{
+			"type": "Text",
+			"globs": [
+				"**/*.html",
+				"**/*.svg"
+			],
+			"fallthrough": true
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "DEMO_KV",
+			"id": "12b1359981e94b5b944bb9d3aac2fa10",
+			"remote": true
+		}
+	]
 }

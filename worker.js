@@ -13,6 +13,8 @@
 import indexHtml from './index.html';
 import adminHtml from './admin.html';
 import securityHtml from './security.html';
+import logoSvg from './logo.svg';
+import faviconSvg from './favicon.svg';
 
 export default {
   async fetch(request, env, ctx) {
@@ -28,6 +30,19 @@ export default {
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: corsHeaders });
+    }
+
+    // Static Assets
+    if (pathname === '/favicon.svg' || pathname === '/favicon.ico') {
+      return new Response(faviconSvg, {
+        headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+
+    if (pathname === '/logo.svg') {
+      return new Response(logoSvg, {
+        headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }
+      });
     }
 
     // Static Pages Routing

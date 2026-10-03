@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دیدبان | پنل مدیریت درخواست‌های دمو</title>
 
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -46,11 +49,14 @@
     <!-- Top Navigation -->
     <nav class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-30">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <i class="fas fa-shield-halved text-2xl text-teal-400"></i>
-                <span class="text-xl font-bold">Hik<span class="text-teal-400">Status</span></span>
-                <span class="text-xs bg-teal-500/10 text-teal-400 border border-teal-500/30 px-2 py-0.5 rounded-full font-medium">پنل مدیریت دمو</span>
-            </div>
+            <a href="index.html" class="flex items-center space-x-3 space-x-reverse group">
+                <img src="logo.svg" alt="دیدبان" class="w-9 h-9 object-contain rounded-xl shadow-md shadow-teal-500/20 group-hover:scale-105 transition duration-300">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold tracking-tight text-white group-hover:text-teal-400 transition">دیدبان</span>
+                    <span class="text-[10px] text-teal-400/80 font-mono tracking-wider -mt-1 uppercase">DIDBAN</span>
+                </div>
+                <span class="mr-2 text-xs bg-teal-500/10 text-teal-400 border border-teal-500/30 px-2 py-0.5 rounded-full font-medium">پنل مدیریت دمو</span>
+            </a>
             <div id="navActions" class="hidden flex items-center space-x-4 space-x-reverse">
                 <button onclick="refreshData()" class="text-slate-300 hover:text-teal-400 text-sm transition flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
                     <i class="fas fa-sync-alt" id="refreshIcon"></i> به‌روزرسانی

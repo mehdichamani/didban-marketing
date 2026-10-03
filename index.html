@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دیدبان | تکامل نظارت؛ کنترل یکپارچه کلان</title>
 
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -85,10 +88,13 @@
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2 space-x-reverse">
-                <i class="fas fa-shield-halved text-2xl text-teal-400"></i>
-                <span class="text-xl font-bold">Hik<span class="text-teal-400">Status</span></span>
-            </div>
+            <a href="#" class="flex items-center space-x-3 space-x-reverse group">
+                <img src="logo.svg" alt="دیدبان" class="w-9 h-9 object-contain rounded-xl shadow-md shadow-teal-500/20 group-hover:scale-105 transition duration-300">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold tracking-tight text-white group-hover:text-teal-400 transition">دیدبان</span>
+                    <span class="text-[10px] text-teal-400/80 font-mono tracking-wider -mt-1 uppercase">DIDBAN</span>
+                </div>
+            </a>
             <div class="hidden md:flex space-x-8 space-x-reverse">
                 <a href="#problem" class="text-slate-300 hover:text-teal-400 transition">چالش‌ها</a>
                 <a href="#features" class="text-slate-300 hover:text-teal-400 transition">ویژگی‌ها</a>
@@ -300,9 +306,12 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8 mb-12">
                 <div>
-                    <div class="flex items-center space-x-2 space-x-reverse mb-4">
-                        <i class="fas fa-shield-halved text-xl text-teal-400"></i>
-                        <span class="text-lg font-bold">Hik<span class="text-teal-400">Status</span></span>
+                    <div class="flex items-center space-x-3 space-x-reverse mb-4">
+                        <img src="logo.svg" alt="دیدبان" class="w-8 h-8 object-contain rounded-lg">
+                        <div class="flex flex-col">
+                            <span class="text-lg font-bold text-white">دیدبان</span>
+                            <span class="text-[10px] text-teal-400 font-mono tracking-wider -mt-1 uppercase">DIDBAN</span>
+                        </div>
                     </div>
                     <p class="text-slate-500 text-sm">تکامل نظارت، از چالش‌های میدانی تا کنترل یکپارچه کلان.</p>
                 </div>
