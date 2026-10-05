@@ -80,6 +80,48 @@
         .glow-btn:hover {
             box-shadow: 0 0 30px rgba(45, 212, 191, 0.6);
         }
+
+        /* Hero Preview Mockup & Micro-animations */
+        .dashboard-frame {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border: 1px solid rgba(45, 212, 191, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(45, 212, 191, 0.15);
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.8), transparent);
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .radar-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            background: conic-gradient(from 0deg, rgba(45, 212, 191, 0.2) 0deg, transparent 60deg, transparent 360deg);
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .badge-beta {
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.15), rgba(6, 182, 212, 0.25));
+            border: 1px solid rgba(45, 212, 191, 0.4);
+        }
     </style>
 </head>
 
@@ -116,44 +158,163 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="min-h-screen flex items-center justify-center relative grid-bg pt-20">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900"></div>
+    <header class="min-h-screen flex items-center justify-center relative grid-bg pt-28 pb-16">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/60 to-slate-950"></div>
         <div class="container mx-auto px-6 text-center relative z-10">
-            <div
-                class="inline-block mb-4 px-4 py-1 bg-slate-800/50 border border-teal-500/30 rounded-full text-teal-400 text-sm">
-                <i class="fas fa-circle text-[8px] animate-pulse ml-2"></i> پلتفرم هوشمند مانیتورینگ زیرساخت نظارت
+            <!-- Beta Release Badge -->
+            <div class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full badge-beta text-teal-300 text-xs sm:text-sm font-medium shadow-lg shadow-teal-500/10">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
+                </span>
+                <span>انتشار نسخه جدید <b>۰.۲.۰ آزمایشی (v0.2.0-beta)</b> با موتور پایش دستکاری و هوش مصنوعی انحراف زاویه</span>
+                <i class="fas fa-chevron-left text-[10px] text-teal-400 mr-1"></i>
             </div>
+
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
                 تکامل نظارت؛ <br> از چالش‌های میدانی تا <span class="gradient-text">کنترل یکپارچه کلان</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10">
-                وقتی تعداد دوربین‌ها از حد مشخصی عبور می‌کند، نظارت به بحران تبدیل می‌شود. دیدبان سامانه‌ای متمرکز
-                برای پایش ۲۴ ساعته هزاران دوربین و NVR با فیلترینگ هوشمند خطاها.
+            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                وقتی تعداد دوربین‌ها از صدها دستگاه فراتر می‌رود، نظارت سنتی فلج می‌شود. دیدبان سامانه‌ای متمرکز و هوشمند
+                برای پایش ۲۴ ساعته دوربین‌ها، دستگاه‌های NVR، تشخیص خودکار چرخش زاویه لنز و فیلترینگ قطعی‌های کاذب است.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
                 <button onclick="openModal()"
-                    class="bg-teal-500 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-teal-400 transition glow-btn">
-                    <i class="fas fa-rocket ml-2"></i> درخواست دموی اختصاصی
+                    class="bg-teal-500 text-slate-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-teal-400 transition glow-btn flex items-center justify-center gap-2">
+                    <i class="fas fa-rocket"></i>
+                    <span>درخواست دموی سازمانی</span>
                 </button>
                 <a href="#features"
-                    class="border border-slate-600 text-slate-200 px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-800 transition">
-                    بررسی ویژگی‌ها
+                    class="border border-slate-700 bg-slate-900/60 backdrop-blur text-slate-200 px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-800 hover:border-teal-500/40 transition flex items-center justify-center gap-2">
+                    <i class="fas fa-microchip text-teal-400"></i>
+                    <span>مشاهده قابلیت‌های نسل جدید</span>
                 </a>
             </div>
 
+            <!-- Interactive Live Mockup Showcase -->
+            <div class="dashboard-frame rounded-2xl max-w-5xl mx-auto p-4 sm:p-6 relative overflow-hidden text-right mb-16">
+                <div class="scanline"></div>
+                <!-- Frame Header Bar -->
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                        <span class="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1.5">
+                            <i class="fas fa-shield-halved text-teal-400"></i> دیدبان | مرکز پایش متمرکز شبکه (NOC Dashboard)
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs">
+                        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Live WebSocket: متصل
+                        </span>
+                        <span class="text-slate-400 font-mono">نسخه 0.2.0-beta</span>
+                    </div>
+                </div>
+
+                <!-- Frame Grid Preview -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Live Camera Card 1: Normal with Sub-stream -->
+                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-xl p-3 relative group">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                                <i class="fas fa-video text-teal-400 text-[10px]"></i> دوربین ورودی کارخانه ۲ (CAM-04)
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono">عادی / لایو</span>
+                        </div>
+                        <div class="h-28 bg-slate-900 rounded-lg relative overflow-hidden flex items-center justify-center border border-slate-800">
+                            <!-- Visual Pattern -->
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:8px_8px]"></div>
+                            <i class="fas fa-building text-3xl text-slate-700"></i>
+                            <div class="absolute bottom-2 right-2 text-[10px] bg-black/70 backdrop-blur px-1.5 py-0.5 rounded text-slate-300 font-mono flex items-center gap-1">
+                                <i class="fas fa-wifi text-emerald-400 text-[9px]"></i> Sub-Stream 1080p
+                            </div>
+                            <div class="absolute top-2 left-2 text-[9px] bg-black/60 px-1.5 py-0.5 rounded text-slate-400 font-mono">
+                                25 FPS | ISAPI
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between text-[11px] text-slate-400">
+                            <span>پایش ضبط: فعال</span>
+                            <span class="text-emerald-400 font-mono">پایداری ۹۹.۹٪</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Camera Card 2: AI Tamper / Angle Shift Alert -->
+                    <div class="bg-slate-950/80 border border-rose-500/40 rounded-xl p-3 relative shadow-lg shadow-rose-500/5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-rose-200 flex items-center gap-1">
+                                <i class="fas fa-triangle-exclamation text-rose-400 text-[10px]"></i> انبار مواد اولیه (CAM-11)
+                            </span>
+                            <span class="text-[10px] bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded font-mono animate-pulse">هشدار انحراف زاویه</span>
+                        </div>
+                        <div class="h-28 bg-slate-900 rounded-lg relative overflow-hidden flex items-center justify-center border border-rose-500/30">
+                            <div class="absolute inset-0 bg-rose-500/5"></div>
+                            <i class="fas fa-boxes-stacked text-3xl text-slate-700"></i>
+                            <!-- Bounding box mockup -->
+                            <div class="absolute inset-3 border border-dashed border-rose-400/60 rounded flex items-center justify-center">
+                                <span class="bg-rose-950/90 text-rose-300 text-[10px] px-2 py-0.5 rounded border border-rose-500/40 font-mono">
+                                    تغییر زاویه لنز: ۲۲٪ انحراف کادر
+                                </span>
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-[10px] bg-black/70 backdrop-blur px-1.5 py-0.5 rounded text-rose-300 font-mono">
+                                الگوریتم Edge NCC
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between text-[11px]">
+                            <span class="text-slate-400">تشخیص هوشمند مرجع</span>
+                            <span class="text-rose-400 font-medium">اعلان تلگرام ارسال شد</span>
+                        </div>
+                    </div>
+
+                    <!-- GIS & FOV Interactive Preview -->
+                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-xl p-3 relative">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                                <i class="fas fa-map-location-dot text-cyan-400 text-[10px]"></i> جانمایی GIS و زاویه دید (FOV)
+                            </span>
+                            <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono">نقشه تعاملی</span>
+                        </div>
+                        <div class="h-28 bg-slate-900 rounded-lg relative overflow-hidden flex items-center justify-center border border-slate-800">
+                            <!-- Radar sweep circle -->
+                            <div class="w-20 h-20 rounded-full border border-teal-500/30 relative flex items-center justify-center">
+                                <div class="radar-sweep"></div>
+                                <div class="w-2 h-2 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400"></div>
+                                <!-- Cone simulation -->
+                                <div class="absolute w-12 h-12 -top-1 -right-1 border-t-2 border-r-2 border-teal-400/60 opacity-60 rounded-tr-full"></div>
+                            </div>
+                            <div class="absolute top-2 right-2 text-[9px] bg-slate-800/80 px-1.5 py-0.5 rounded text-teal-300 font-mono">
+                                شعبه ۱۲: ۳۸ دوربین
+                            </div>
+                            <div class="absolute bottom-2 left-2 text-[9px] bg-black/60 px-1.5 py-0.5 rounded text-slate-400 font-mono">
+                                کلاسترینگ خودکار
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between text-[11px] text-slate-400">
+                            <span>پوشش زاویه دوربین‌ها</span>
+                            <span class="text-cyan-400 font-mono">برداری و بدون همپوشانی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-4xl mx-auto">
-                <div>
-                    <h3 class="text-4xl font-bold text-teal-400">+۵۰۰</h3>
-                    <p class="text-slate-400 mt-2">دستگاه NVR همزمان</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="glass-card p-4 rounded-xl">
+                    <h3 class="text-3xl font-bold text-teal-400">+۵۰۰</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">دستگاه NVR همزمان</p>
                 </div>
-                <div>
-                    <h3 class="text-4xl font-bold text-teal-400">۲۴/۷</h3>
-                    <p class="text-slate-400 mt-2">پایش مداوم و بدون خستگی</p>
+                <div class="glass-card p-4 rounded-xl">
+                    <h3 class="text-3xl font-bold text-cyan-400">میلی‌ثانیه</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">پخش استریم RTSP زنده</p>
                 </div>
-                <div>
-                    <h3 class="text-4xl font-bold text-teal-400">۱۰۰٪</h3>
-                    <p class="text-slate-400 mt-2">کاهش هشدارهای بی‌جا و نویز</p>
+                <div class="glass-card p-4 rounded-xl">
+                    <h3 class="text-3xl font-bold text-teal-400">Edge NCC</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">موتور سنجش انحراف زاویه</p>
+                </div>
+                <div class="glass-card p-4 rounded-xl">
+                    <h3 class="text-3xl font-bold text-cyan-400">۱۰۰٪</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">فیلتر نویز و خطای کاذب</p>
                 </div>
             </div>
         </div>
@@ -189,59 +350,204 @@
     <section id="features" class="py-24 bg-slate-900/50 grid-bg">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="text-teal-400 font-bold">ارزش‌آفرینی دیدبان</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">حل مشکلات کلان سازمان‌ها</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">فراتر از یک مانیتورینگ ساده، مستقیماً روی حل دغدغه‌های اصلی
-                    تیم‌های IT تمرکز داریم.</p>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-semibold mb-3">
+                    <i class="fas fa-sparkles"></i> قابلیت‌های نوآورانه دیدبان (Didban Architecture)
+                </div>
+                <h2 class="text-3xl md:text-5xl font-extrabold mt-2 mb-4">فراتر از مانیتورینگ؛ هوشمندی در مقیاس کلان</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed">دیدبان صرفاً خاموش یا روشن بودن تجهیزات را بررسی نمی‌کند؛ بلکه سلامت ساختاری، انحراف فیزیکی، کیفیت ضبط و بار پردازشی شبکه را هوشمندانه پایش می‌کند.</p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8">
 
-                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
-                    <div class="bg-teal-500/10 p-4 rounded-xl">
-                        <i class="fas fa-filter text-3xl text-teal-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-3">فیلترینگ هوشمند خطاها</h3>
-                        <p class="text-slate-400 leading-relaxed">جداسازی قطعی‌های گذرا (مثل نوسانات برق) از قطعی‌های
-                            حیاتی. سیستم به جای ارسال صدها پیام آزاردهنده، تنها هنگام بروز خرابی واقعی و طولانی‌مدت
-                            هشدار صادر می‌کند.</p>
-                    </div>
-                </div>
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
-                    <div class="bg-teal-500/10 p-4 rounded-xl">
-                        <i class="fas fa-network-wired text-3xl text-teal-400"></i>
-                    </div>
+                <!-- Feature 1: AI Tampering & Angle Shift (NEW v0.2.0) -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between border-teal-500/30 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl group-hover:bg-teal-500/20 transition"></div>
                     <div>
-                        <h3 class="text-xl font-bold mb-3">نظارت بر زیرساخت‌های پراکنده</h3>
-                        <p class="text-slate-400 leading-relaxed">مدیریت کارخانه‌ها و شعب توزیع‌شده در استان‌ها از یک
-                            نقطه مرکزی با مصرف کاملاً بهینه پهنای باند. دیگر نیازی به تیم‌های انسانی محلی نیست.</p>
-                    </div>
-                </div>
-
-                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
-                    <div class="bg-teal-500/10 p-4 rounded-xl">
-                        <i class="fas fa-chart-line text-3xl text-teal-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-3">گزارش‌گیری تعاملی و مدیریت بحران</h3>
-                        <p class="text-slate-400 leading-relaxed">تولید گزارش‌های روزانه (مثلاً قطعی‌های بالای ۲ ساعت).
-                            پر کردن فرمت ساده دلایل قطعی توسط واحد IT شعبه و ارائه نمودارهای تحلیلی جامع به مدیران ارشد.
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-teal-500/15 p-3.5 rounded-xl border border-teal-500/30 text-teal-400">
+                                <i class="fas fa-camera-rotate text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                اختصاصی نسخه ۰.۲.۰
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">تشخیص هوشمند دستکاری و چرخش دوربین (AI Tamper)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            تلفیق ضریب همبستگی فضایی (NCC) و لبه‌ها (Edge NCC) برای تشخیص قطعی انحراف زاویه، تکان خوردن لنز یا پوشانده شدن دوربین بدون فریب خوردن از تغییرات نور شب و روز یا شرایط جوی.
                         </p>
                     </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-teal-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-check-double text-[11px]"></i> حفاظت خودکار از بیس‌لاین + فیلتر دوربین‌های PTZ
+                    </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-start gap-6">
-                    <div class="bg-teal-500/10 p-4 rounded-xl">
-                        <i class="fas fa-hard-drive text-3xl text-teal-400"></i>
-                    </div>
+                <!-- Feature 2: Interactive GIS & FOV (NEW) -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between border-cyan-500/30 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition"></div>
                     <div>
-                        <h3 class="text-xl font-bold mb-3">پایش سلامت ذخیره‌سازی</h3>
-                        <p class="text-slate-400 leading-relaxed">تشخیص لحظه‌ای عدم ضبط تصاویر و مشکلات هارد یا NVR.
-                            دیگر هرگز پیش از وقوع حادثه متوجه ضبط نشدن دوربین‌ها (مثل باسکول کارخانه) نخواهید شد.</p>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-cyan-500/15 p-3.5 rounded-xl border border-cyan-500/30 text-cyan-400">
+                                <i class="fas fa-map-location-dot text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                نقشه برداری GIS
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">جانمایی نقشه و میدان دید پویا (Dynamic FOV)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            نمایش موقعیت تمام دوربین‌ها روی نقشه ماهواره‌ای و پلان‌های ساختمانی با رسم دقیق مخروط زاویه دید (FOV) و کلاسترینگ اتوماتیک برای مشاهده فوری وضعیت کل سایت‌های صنعتی.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-cyan-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-layer-group text-[11px]"></i> کلاسترینگ خودکار بدون افت سرعت در هزاران مارکر
                     </div>
                 </div>
 
+                <!-- Feature 3: Ultra-Low Latency RTSP Stream (NEW) -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-emerald-500/15 p-3.5 rounded-xl border border-emerald-500/30 text-emerald-400">
+                                <i class="fas fa-bolt text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                بدون بار اضافه NVR
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">پخش زنده آنی (Live Stream) با کنترل ترافیک</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            استریم تصویر با سوییچ آنی Main-stream و Sub-stream، با کمترین تاخیر (Latency) ممکن و سازگاری کامل با نمایشگرهای موبایل و تبلت با مدیریت هوشمند بافرینگ.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-emerald-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-mobile-screen text-[11px]"></i> بهینه‌سازی کامل ریسپانسیو (100dvh)
+                    </div>
+                </div>
+
+                <!-- Feature 4: Rich Telegram Alerts & Grouping (NEW) -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-sky-500/15 p-3.5 rounded-xl border border-sky-500/30 text-sky-400">
+                                <i class="fab fa-telegram text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                هوشمند و تجمیعی
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">هشدارهای ساختاریافته تلگرام (Rich Alerts)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            خداحافظی با صدها پیامک و اسپم آزاردهنده؛ دیدبان هشدارهای هر سایت را به صورت یکپارچه با اموجی وضعیت، تفکیک قطع ضبط و اتصال مجدد در قالب پیام‌های خوانا ارسال می‌کند.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-sky-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-bell-slash text-[11px]"></i> جلوگیری قطعی از هشدارهای ناگهانی هنگام راه‌اندازی
+                    </div>
+                </div>
+
+                <!-- Feature 5: Storage & Record Health -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-amber-500/15 p-3.5 rounded-xl border border-amber-500/30 text-amber-400">
+                                <i class="fas fa-hard-drive text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                تضمین سلامت هارد
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">پایش مداوم ضبط و سلامت هارددیسک‌ها</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            تصویر هست ولی ضبط متوقف شده است؟ دیدبان سریعاً قبل از وقوع رخداد یا بحران قضایی، خاموشی ضبط یا خطاهای سکتور هارددیسک دستگاه‌های ضبط را اعلام می‌کند.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-amber-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-shield-virus text-[11px]"></i> ممیزی کانال‌های حساس و باسکول‌ها
+                    </div>
+                </div>
+
+                <!-- Feature 6: Outage Audit & Explanation -->
+                <div class="glass-card p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="bg-purple-500/15 p-3.5 rounded-xl border border-purple-500/30 text-purple-400">
+                                <i class="fas fa-clipboard-check text-2xl"></i>
+                            </div>
+                            <span class="text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2.5 py-0.5 rounded-full font-mono">
+                                فرآیند سازمانی
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">ثبت تعاملی دلایل قطعی و گزارش‌های KPI</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            امکان ثبت علل قطعی‌های بالای ۲ ساعت توسط مسئول IT هر شعبه با زمان‌بندی مهلت ثبت، پیشنهاد خودکار علل شایع و صدور گزارش‌های تحلیلی مدیریتی.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-xs text-purple-400 flex items-center gap-1 font-mono">
+                        <i class="fas fa-chart-pie text-[11px]"></i> تحلیل نرخ دسترسی (Uptime) به تفکیک کارخانه
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Comparison Section (Traditional vs Didban) -->
+            <div class="mt-20 glass-card p-8 md:p-12 rounded-3xl border border-slate-800">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-2">دیدبان در برابر روش‌های سنتی مانیتورینگ</h3>
+                    <p class="text-slate-400 text-sm">چرا سازمان‌های بزرگ مانیتورینگ خود را به دیدبان ارتقا می‌دهند؟</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Traditional -->
+                    <div class="bg-rose-950/20 border border-rose-500/30 rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4 text-rose-400 font-bold text-lg">
+                            <i class="fas fa-circle-xmark text-xl"></i>
+                            <span>روش‌های سنتی و دستی</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-xmark text-rose-400 mt-1 shrink-0"></i>
+                                <span>عدم اطلاع از تغییر زاویه یا پوشانده شدن لنز تا هنگام بازبینی فیلم‌های سرقت یا حادثه</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-xmark text-rose-400 mt-1 shrink-0"></i>
+                                <span>طوفان پیامک‌ها و هشدارهای فیک به ازای هر قطع و وصل میلی‌ثانیه‌ای برق</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-xmark text-rose-400 mt-1 shrink-0"></i>
+                                <span>اشغال پهنای باند و داغ شدن NVRها به دلیل درخواست‌های تکراری و غیراستاندارد</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-xmark text-rose-400 mt-1 shrink-0"></i>
+                                <span>نبود هیچ سازوکاری برای پاسخگویی کارشناسان محلی درباره دلایل خاموشی دوربین‌ها</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Didban -->
+                    <div class="bg-teal-950/20 border border-teal-500/30 rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4 text-teal-400 font-bold text-lg">
+                            <i class="fas fa-circle-check text-xl"></i>
+                            <span>راهکار یکپارچه و پیشرفته دیدبان</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-slate-200">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-teal-400 mt-1 shrink-0"></i>
+                                <span>سنجش خودکار انحراف زاویه و دستکاری (Tamper) بر اساس مقایسه تصویری هوشمند</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-teal-400 mt-1 shrink-0"></i>
+                                <span>پیام‌های تجمیعی و ساختاریافته در تلگرام و ایمیل با فیلتر هوشمند خطاهای گذرا</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-teal-400 mt-1 shrink-0"></i>
+                                <span>اتصال مستقیم از طریق پروتکل بهینه ISAPI و جنریتورهای ناهمگام با حداقل بار مصرفی</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-teal-400 mt-1 shrink-0"></i>
+                                <span>سیستم ممیزی دلایل قطعی، گزارش‌های تحلیلی مدیریتی و کنترل دسترسی بر پایه نقش (RBAC)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
